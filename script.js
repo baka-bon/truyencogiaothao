@@ -118,6 +118,13 @@ window.addEventListener('load', (event) => {
     removeSelector('#block-widget-css');
     removeSelector('#global-styles-inline-css');
     removeSelector('#ct-shortcode-css');
+    removeSelector('#wp-emoji-styles-inline-css');
+    removeSelector('#loaders-css');
+    removeSelector('#madara-icons-css');
+    removeSelector('#madara-css-css');
+    removeSelector('#madara-css-inline-css');
+    removeSelector('#jquery-migrate-js');
+
     removeSelector('#wpdiscuz-frontend-css-css');
     removeSelector('#wpdiscuz-frontend-css-inline-css');
     removeSelector('#wpdiscuz-fa-css');
@@ -133,8 +140,6 @@ window.addEventListener('load', (event) => {
     removeSelector('#wp-manga-login-ajax-js');
     removeSelector('#kdn-auto-leech-js-cron-js-extra');
     removeSelector('#kdn-auto-leech-js-cron-js');
-    removeSelector('#wp-manga-js-extra');
-    removeSelector('#madara-js-js-extra');
     removeSelector('.c-sub-header-nav');
     removeSelector('#a11y-speak-assertive');
     removeSelector('#a11y-speak-polite');
@@ -144,6 +149,20 @@ window.addEventListener('load', (event) => {
     removeSelector('#wp-a11y-js');
     removeSelector('#cboxOverlay');
     removeSelector('#colorbox');
+    removeSelector('#madara-core-js');
+    removeSelector('#bootstrap-js');
+    removeSelector('#shuffle-js');
+    removeSelector('#imagesloaded-js');
+    removeSelector('#aos-js');
+    removeSelector('#madara-ajax-js');
+    removeSelector('#jquery-ui-core-js');
+    removeSelector('#jquery-ui-menu-js');
+    removeSelector('#wp-dom-ready-js');
+    removeSelector('#wp-hooks-js');
+    removeSelector('#wp-i18n-js');
+    removeSelector('#wp-i18n-js-after');
+    removeSelector('#jquery-ui-autocomplete-js');
+    removeSelector('#ct-shortcode-js-js');
     
     // Only reflow slider items on the homepage (/, /index.html, /index.php)
     try {
@@ -177,4 +196,22 @@ window.addEventListener('load', (event) => {
     } catch (e) {
         console.error('reflow slider items error', e);
     }
+
+    // Remove .allow_vote class
+    try {
+        var items = document.querySelectorAll('.allow_vote');
+        for (var i = 0; i < items.length; i++) {
+            try {
+                var item = items[i];
+                try { item.classList.remove('allow_vote'); } catch (_) {}
+            } catch (innerErr) {
+                // ignore per-item errors
+                console.error('error removing allow_vote', innerErr);
+            }
+        }
+    } catch (e) {
+        console.error('scan post-allow_vote error', e);
+    }
+    removeSelector('.user-rating');
+    removeSelector('input.rating-post-id');
 });
