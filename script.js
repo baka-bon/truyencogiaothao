@@ -144,4 +144,37 @@ window.addEventListener('load', (event) => {
     removeSelector('#wp-a11y-js');
     removeSelector('#cboxOverlay');
     removeSelector('#colorbox');
+    
+    // Only reflow slider items on the homepage (/, /index.html, /index.php)
+    try {
+        var _isHomepage = false;
+        try {
+            var _p = (window.location && window.location.pathname) ? window.location.pathname : '/';
+            _isHomepage = /^\/(index\.(html?|php))?$/i.test(_p);
+        } catch (_) { _isHomepage = false; }
+
+        if (_isHomepage) {
+            var sliderItems = Array.prototype.slice.call(document.querySelectorAll('.slider__item'));
+            if (sliderItems && sliderItems.length) {
+                var sliderContainer = document.querySelector('.slider__container');
+                if (sliderContainer) {
+                    // Clear container then append saved items (this moves nodes if they were already in DOM)
+                    try { sliderContainer.innerHTML = ''; } catch (_) {
+                        // fallback: remove children one-by-one
+                        while (sliderContainer.firstChild) sliderContainer.removeChild(sliderContainer.firstChild);
+                    }
+                    for (var si = 0; si < sliderItems.length; si++) {
+                        var it = sliderItems[si];
+                        if (it && it.nodeType) sliderContainer.appendChild(it);
+                    }
+                    try { sliderContainer.classList.remove('slick-initialized'); } catch (_) {}
+                    try { sliderContainer.classList.remove('slick-slider'); } catch (_) {}
+                }
+            }
+        } else {
+            removeSelector('.c-top-sidebar');
+        }
+    } catch (e) {
+        console.error('reflow slider items error', e);
+    }
 });
